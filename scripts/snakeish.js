@@ -1,4 +1,135 @@
+ const bigGrid = 400;
+ const bigGridFind = document.getElementById("snakeSet"); 
+ var gameRunning = false;
+ var gridArray = [];
+ var gridFood = new Set();
+ var blockedSquares = [190, 191, 192, 193, 194];
+ var snakeHead = "190";
+ var snakeLength = "5";
+ var snakeAss = parseInt(snakeHead) + parseInt(snakeLength);
+ console.log (snakeAss);
+
+ for (let i = 0; i < bigGrid; i++) {
+  const placeGrid = document.createElement("div");
+    placeGrid.classList.add("gridXY");
+    placeGrid.id = (i + 1);  
+    bigGridFind.appendChild(placeGrid);
+    gridArray.push(placeGrid.id);  
+    placeGrid.textContent = placeGrid.id;
+ }
+ console.log(gridArray);
+
+ document.getElementById("snakeSet").onclick = goSnake; 
+
+ function goSnake(){
+  document.getElementById("snakeSet").onclick = null
+  document.getElementById("190").style.backgroundColor = "red";
+  for (let i = parseInt(snakeHead) + 1; i < snakeAss; i++){
+    document.getElementById(i).style.backgroundColor = "blue";
+  }
+  console.log("Snake Placed"); 
+  
+  while (gridFood.size < 8){
+    var foodSquare = Math.floor(Math.random() * 400)
+      if (!gridFood.has(foodSquare) && !blockedSquares.includes(foodSquare)){
+         gridFood.add(foodSquare);
+      }
+  }
+    gridFood.forEach(item => {
+    console.log(item);
+    document.getElementById(gridArray[item]).style.backgroundColor = "green";
+  });
+  console.log("Food Placed", gridFood);
+ }
+ document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowUp") {
+    console.log("up arrow pressed");
+    snakeDir = -20;
+    moveSnake();
+  } else if (e.key === "ArrowDown") {
+    snakeDir = +20;
+    moveSnake();
+    console.log("down arrow pressed");
+  } else if (e.key === "ArrowLeft") {
+  snakeDir = -1;
+  moveSnake();
+  console.log("left arrow pressed");
+} else if (e.key === "ArrowRight") {
+  snakeDir = +1;
+  moveSnake();
+  console.log("right arrow pressed");
+}
+
+});
+function moveSnake() {
+  console.log("head : ", snakeHead);
+  console.log("ass : ", snakeAss);
+  if (gridFood.has(parseInt(snakeHead))){
+    console.log("Feeding Time");
+    snakeLength = parseInt(snakeLength) + 2;
+  }
+  console.log("moving : ", snakeDir);
+  console.log(parseInt(snakeHead) + snakeDir)
+  document.getElementById(parseInt(snakeHead) + snakeDir).style.backgroundColor = "red";
+  document.getElementById(parseInt(snakeHead)).style.backgroundColor = "blue";
+  document.getElementById(parseInt(snakeAss)).style.backgroundColor = "";
+  snakeHead = parseInt(snakeHead) + snakeDir;
+  console.log("head now : ", snakeHead);
+  snakeAss = snakeAss + snakeDir;
+  console.log("ass now : ", snakeAss);
+  console.log(parseInt(snakeHead) + snakeDir);
+
+
+}
  
+
+
+
+
+
+
+
+
+ /*
+
+
+if (gridFood.has(snakeHead)){
+  console.log("Feeding time");
+  snakeLength = snakeLength +2;
+}
+
+
+if (snakeDir === "Up"){
+  console.log("UP, UP and Away");
+  document.getElementById(parseInt(snakeHead) - 20).style.backgroundColor = "red";
+  document.getElementById(parseInt(snakeHead)).style.backgroundColor = "blue";
+  document.getElementById(parseInt(snakeAss)).style.backgroundColor = "";
+  snakeHead = snakeHead - 20;
+  snakeAss = snakeAss - 1;
+}
+if (snakeDir === "Left"){
+  console.log("I LEFT my heart in....");
+  document.getElementById(parseInt(snakeHead) - 1).style.backgroundColor = "red";
+  document.getElementById(parseInt(snakeHead)).style.backgroundColor = "blue";
+  document.getElementById(parseInt(snakeAss)).style.backgroundColor = "";
+  snakeHead = snakeHead - 1;
+  snakeAss = snakeAss - 1;
+}
+if (snakeDir === "Right"){
+  console.log("Get RIGHT to the point");
+}
+if (snakeDir === "Down"){
+  console.log("All DOWNhill from here");
+  document.getElementById(parseInt(snakeHead) + 20).style.backgroundColor = "red";
+  document.getElementById(parseInt(snakeHead)).style.backgroundColor = "blue";
+  document.getElementById(parseInt(snakeAss)).style.backgroundColor = "";
+  snakeHead = snakeHead + 20;
+  snakeAss = snakeAss - 1;
+}
+});
+*/
+/*
+
 const bigGrid = 551;                                                        // Yeah...551, spent 15 minutes trying to get it to be a box, without corners
 const bigGridFind = document.getElementById("snakeSet");                    // This is to find the element which will contain the grid
 var gridArray = [];                                                       // This is to hold the grid in an array for later use
@@ -6,6 +137,9 @@ var gridArray = [];                                                       // Thi
 var gridFood = new Set();
 var blockedSquares = ["275", "276", "277", "278", "279"];
 var snakeHead = "0";
+var snakeAss = "0"
+var snakeDir = "";
+var snakePos = blockedSquares[0];
 
 
     for (let i = 0; i < bigGrid; i++) {                                     // This is where things got tricky. Already, how to create a grid via JS (which of course isn't enough, the grid has to have class and id.
@@ -41,12 +175,41 @@ function goSnake(){
     document.getElementById("x"+blockedSquares[i]).style.backgroundColor = "blue";
   }
   snakeHead = blockedSquares[0];
+  snakeAss = blockedSquares[blockedSquares.length - 1]; 
+  console.log(snakeAss);
   document.getElementById("x"+snakeHead).style.backgroundColor = "red";
-}
   
- 
+  
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp") {
+      console.log("up arrow pressed");
+      snakeDir = "Up";
+    } else if (e.key === "ArrowDown") {
+      snakeDir = "Down";
+      console.log("down arrow pressed");
+    } else if (e.key === "ArrowLeft") {
+    snakeDir = "Left";
+    console.log("left arrow pressed");
+  } else if (e.key === "ArrowRight") {
+    snakeDir = "Right";
+    console.log("right arrow pressed");
+  }
+  
+  if (snakeDir === "Left") {
+  
+    snakeAss = snakeHead;
+    snakeHead = snakeHead - 1;
+    document.getElementById(gridArray[snakeHead]).style.backgroundColor = "red";
+    document.getElementById(gridArray[snakeHead + 1]).style.backgroundColor = "blue";
+    document.getElementById(gridArray[snakeAss + blockedSquares.length]).style.backgroundColor = "";
+    document.getElementById(gridArray[snakeAss + 1]).style.backgroundColor = "blue";
 
 
+  }
+  
+});
+}
+*/
         // For tomorrow : 
 // Get the grid set up ---- (done)
 // Pick some UNIQUE random spots for food (let's say 8, which once at 4 will always stay at 4) - First 8 done
