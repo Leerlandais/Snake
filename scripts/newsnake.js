@@ -97,7 +97,7 @@ function moveSnake(dir) {
                console.log ("new position : ", snakePos);
                snakeHead = snakePos[0];
                 makeSnake();
-            }, 250);
+            }, 100);
             }else if (dir === "sDown") {
                 intervalId = setInterval(() => {
     
@@ -113,7 +113,7 @@ function moveSnake(dir) {
         console.log ("new position : ", snakePos);
         snakeHead = snakePos[0];
         makeSnake();
-    }, 250);
+    }, 100);
     }else if (dir === "sLeft") {
         intervalId = setInterval(() => {
         console.log("let's move left");
@@ -128,7 +128,7 @@ function moveSnake(dir) {
         console.log ("new position : ", snakePos);
         snakeHead = snakePos[0];
         makeSnake();  
-    }, 250);      
+    }, 100);      
     }else if (dir === "sRight") {
         intervalId = setInterval(() => {
         console.log("let's move right");
@@ -143,7 +143,7 @@ function moveSnake(dir) {
         console.log ("new position : ", snakePos);
         snakeHead = snakePos[0];
         makeSnake();
-    }, 250);
+    }, 100);
     }
 }
 
